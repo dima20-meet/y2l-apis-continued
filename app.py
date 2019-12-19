@@ -18,7 +18,7 @@ def study_image():
 
 
 	# you can use the headers to pass in hidden info, here we are sending a secret Key (think of it as a password)
-	headers = {'Authorization': '89460613ec684b3fad9f6d824450eb2f'}
+	headers = {'Authorization': 'Key 89460613ec684b3fad9f6d824450eb2f'}
 
 	# this is the url of where your request will go
 	api_url = "https://api.clarifai.com/v2/models/aaa03c23b3724a16a56b629203edc62c/outputs"
@@ -35,9 +35,10 @@ def study_image():
 
 # putting everything together; sending the request!
 	response = requests.post(api_url, headers=headers, data=json.dumps(data))
+	request_dict = json.loads(response.content)
 
     
-	return render_template('home.html', results="No results yet :(")
+	return render_template('home.html', results=request_dict["outputs"][0]["data"]["concepts"])
 
 if __name__ == '__main__':
     app.run(debug=True)
